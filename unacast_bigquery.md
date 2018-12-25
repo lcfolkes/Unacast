@@ -1,4 +1,4 @@
-# Unacast work sample
+# Unacast work sample - Lars Folkestad
 
 ## Question 1: What day of week has the most rides in 2014?
 
@@ -30,15 +30,10 @@ ORDER BY RidesCount DESC;
 ```
 
 ### Output
-Weekday|RidesCount
---|--
-Saturday | 25395046
-Friday | 24908598
-Wedsesday | 24199625
-Thursday | 24118335
-Thursday |  22880639
-Sunday | 22352100
-Monday | 21260018
+
+From the chart we can see that Saturday is the day of the week with the most rides in 2014.
+
+![Weekdays with the most rides in 2014](./img/task1.png)
 
 ## Question 2: How has the ratio of payments in cash and by credit card developed over time?
 
@@ -60,14 +55,9 @@ ORDER BY Year ASC;
 ```
 
 ### Output
-Year|CashCreditRatio
--- | --
-2009|2.793364498974205
-2010|1.6288304338278858
-2011|1.3178276439133412
-2012|1.0667065363713637
-2013|0.8476035166906047
-2014|0.7132667952338416
-2015|0.5875488959313436
+
+The chart clearly shows a decreasing trend in the use of cash compared to the use of credit card from 2009 to 2015.
+
+![Cash to credit card ratio](./img/task2.png)
 
 ## Question 3: What is the most popular area to be picked up in 2014, disregarding airports?
