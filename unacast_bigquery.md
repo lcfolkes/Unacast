@@ -7,7 +7,7 @@
 
 
 ```sql
-#What day of week has the most rides in 2014?
+#What day of the week has the most rides in 2014?
 #Count trips started in 2014 as 2014 rides
 SELECT
 CASE EXTRACT(DAYOFWEEK FROM pickup_datetime)
@@ -19,7 +19,7 @@ CASE EXTRACT(DAYOFWEEK FROM pickup_datetime)
   WHEN 6 THEN 'Friday'
   WHEN 7 THEN 'Saturday'
 END
-as Weekday
+AS Weekday
 , COUNT(pickup_datetime) as RidesCount
 FROM (
   SELECT pickup_datetime FROM `nyc-tlc.yellow.trips`
@@ -29,7 +29,7 @@ GROUP BY weekday
 ORDER BY RidesCount DESC;
 ```
 
-### Output
+### Results
 
 From the chart we can see that Saturday is the day of the week with the most rides in 2014.
 
@@ -41,6 +41,8 @@ From the chart we can see that Saturday is the day of the week with the most rid
 [unacast_task2](https://bigquery.cloud.google.com/savedquery/909239636881:4db1826329b245f8ab85af54067c41c0)
 
 ```sql
+#How has the ratio of payments in cash and by credit card developed over time?
+
 SELECT
 #defined year of payment as year of dropoff, taking NYE into consideration
   EXTRACT(YEAR FROM dropoff_datetime) AS Year
@@ -54,10 +56,40 @@ GROUP BY Year
 ORDER BY Year ASC;
 ```
 
-### Output
+### Results
 
-The chart clearly shows a decreasing trend in the use of cash compared to the use of credit card from 2009 to 2015.
+The chart shows an apparent decreasing trend in the use of cash compared to the use of credit card from 2009 to 2015.
 
 ![Cash to credit card ratio](./img/task2.png)
 
 ## Question 3: What is the most popular area to be picked up in 2014, disregarding airports?
+Decimal coordinates are retreived from https://www.latlong.net/.
+Through exploration I found that it was not possible to exclude airports by not including the rate codes two and three, JFK and Newark. LaGuardia was also not included in the rate codes. Moreover, a ride started in e.g. Manhattan could also have rate code = 2 (JFK) because it was heading to JFK.
+
+### SQL query
+[unacast_task3](https://bigquery.cloud.google.com/savedquery/909239636881:3b11c885f0f0482db11c2666e267aa7f)
+```sql
+#What is the most popular area to be picked up in 2014, disregarding airports?
+
+SELECT pickup_latitude, pickup_longitude, COUNT(*) AS num_trips
+FROM `nyc-tlc.yellow.trips`
+WHERE
+  #Erroneus points in data
+  NOT (pickup_latitude = 0.0 OR pickup_longitude = 0.0)
+  #Approximate borders of New York metropolitan area
+  AND (pickup_latitude >= 40.5 AND pickup_latitude <= 41.0)
+  AND (pickup_longitude >= -74.2 AND pickup_longitude <= -73.7)
+  AND EXTRACT(YEAR FROM pickup_datetime) = 2014
+GROUP BY pickup_latitude, pickup_longitude
+ORDER BY num_trips DESC
+LIMIT 10000
+```
+### Results
+As I was not able to remove the airports in my SQL query, the conclusions are drawn solely from the weighted heatmap created with [Carto](https://carto.com/) using the result data from my query.
+From the below map it is evident that the most popular area to be picked up in 2014 is in the Manhattan bourough, but also the western parts of Queens and Brooklyn have high concentrations of pickups.
+
+![Most popular pick up area 2014](./img/task3-1.png)
+
+Zooming in, it seems like the area around Madison Square Garden in Manhattan is the most popular area to be picked up, when looking at the concentration around a small area.
+
+![Popular area_zoomed](./img/task3-2.png)
