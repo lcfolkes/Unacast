@@ -3,7 +3,7 @@
 ## Question 1: What day of week has the most rides in 2014?
 
 ### SQL query
-[unacast_task1](https://bigquery.cloud.google.com/savedquery/754809503548:2489d84203df4acba447d9af0b0706c4)
+[unacast_task1](https://bigquery.cloud.google.com/savedquery/909239636881:016875773be54c828867ab5412e05352)
 
 
 ```sql
@@ -67,7 +67,7 @@ Decimal coordinates are retreived from https://www.latlong.net/.
 Through exploration I found that it was not possible to exclude airports by not including the rate codes two and three, JFK and Newark. LaGuardia was also not included in the rate codes. Moreover, a ride started in e.g. Manhattan could also have rate code = 2 (JFK) because it was heading to JFK.
 
 ### SQL query
-[unacast_task3](https://bigquery.cloud.google.com/savedquery/909239636881:3b11c885f0f0482db11c2666e267aa7f)
+[unacast_task3](https://bigquery.cloud.google.com/savedquery/909239636881:4db1826329b245f8ab85af54067c41c0)
 ```sql
 #What is the most popular area to be picked up in 2014, disregarding airports?
 
